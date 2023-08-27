@@ -4,6 +4,30 @@ const Book = ({ book, onUpdateBook }) => {
   const changeCurrentShelf = (shelf) => {
     onUpdateBook(book, shelf);
   };
+
+  const shelves = [
+    {
+      id: "1",
+      shelfName: "currentlyReading",
+      shelfDisplayName: "Currently Reading",
+    },
+    {
+      id: "2",
+      shelfName: "wantToRead",
+      shelfDisplayName: "Want to Read",
+    },
+    {
+      id: "3",
+      shelfName: "read",
+      shelfDisplayName: "Read",
+    },
+    {
+      id: "4",
+      shelfName: "none",
+      shelfDisplayName: "None",
+    },
+  ];
+
   return (
     <li>
       <div className="book">
@@ -26,10 +50,16 @@ const Book = ({ book, onUpdateBook }) => {
               <option value="none" disabled>
                 Move to...
               </option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
-              <option value="none">None</option>
+              {shelves.map((shelve) => {
+                if (book.shelf === "none" && shelve.shelfName === "none") {
+                  return "";
+                }
+                return (
+                  <option key={shelve.id} value={shelve.shelfName}>
+                    {shelve.shelfDisplayName}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>

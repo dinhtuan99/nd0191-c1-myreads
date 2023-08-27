@@ -18,6 +18,10 @@ function App() {
   }, []);
 
   const searchBooks = async (query) => {
+    if(!query){
+      setFilteredBooks([]);
+      return;
+    }
     let res = await BookAPI.search(query);
     if (res.hasOwnProperty("error")) {
       setFilteredBooks([]);
@@ -25,11 +29,12 @@ function App() {
     }
     if (books.length > 0) {
       res = res.map((book) => {
-        const bookInShelf = books.find((book) => book.id);
+        const bookInShelf = books.find((item) => book.id === item.id);
         if (bookInShelf) {
           return { ...book, shelf: bookInShelf.shelf };
+        } else {
+          return { ...book, shelf: "none" };
         }
-        return book;
       });
     }
     setFilteredBooks(res);

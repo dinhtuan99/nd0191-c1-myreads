@@ -1,19 +1,17 @@
 import PropTypes from "prop-types";
+import { DebounceInput } from 'react-debounce-input'
 
 const SearchBookBar = ({ onSearchBooks }) => {
   const updateQuery = (querySearch) => {
     const trimedQuery = querySearch.trim();
-    if(trimedQuery === ""){
-      return;
-    }
     onSearchBooks(trimedQuery);
   };
 
   return (
     <div className="search-books-input-wrapper">
-      <input
-        type="text"
+      <DebounceInput
         onChange={(event) => updateQuery(event.target.value)}
+        debounceTimeout={500}
         placeholder="Search by title, author, or ISBN"
       />
     </div>
